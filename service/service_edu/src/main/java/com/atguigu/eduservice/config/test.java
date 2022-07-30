@@ -8,6 +8,7 @@ public class test
         System.out.println("git3");
         System.out.println("测试");
         System.out.println("测试1");
+        System.out.println("测试2");
 
     }
 }
