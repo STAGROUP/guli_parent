@@ -28,6 +28,7 @@ public class EduSubjectServiceImpl extends ServiceImpl<EduSubjectMapper, EduSubj
         try {
             //文件输入流
             InputStream in = file.getInputStream();
+            // 文件流  excel实体类  监听器(核心)
             EasyExcel.read(in, SubjectData.class, new SubjectExcelListener(subjectService)).sheet().doRead();
         } catch (Exception e) {
         }
