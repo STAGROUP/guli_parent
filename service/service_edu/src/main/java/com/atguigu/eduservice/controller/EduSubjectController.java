@@ -37,8 +37,8 @@ public class EduSubjectController {
     @GetMapping("getAllSubject")
     public R getAllSubject(){
         //list集合泛型是一级分类 因为一级分类有本身也有二级分类集合
-        subjectService.getAllOneTwoSubject();
-        return R.ok();
+        List<OneSubject> list = subjectService.getAllOneTwoSubject();
+        return R.ok().data("list",list);
     }
 
 }

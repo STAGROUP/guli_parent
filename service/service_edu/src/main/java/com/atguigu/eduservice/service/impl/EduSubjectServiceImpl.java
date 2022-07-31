@@ -27,6 +27,7 @@ import java.util.List;
  * @since 2022-07-27
  */
 @Service
+
 public class EduSubjectServiceImpl extends ServiceImpl<EduSubjectMapper, EduSubject> implements EduSubjectService {
     //添加课程分类
     @Override
