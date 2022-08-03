@@ -23,7 +23,7 @@ import java.util.List;
  * 课程科目 服务实现类
  * </p>
  *
- * @author testjava
+ * @author 张于宴
  * @since 2022-07-27
  */
 @Service

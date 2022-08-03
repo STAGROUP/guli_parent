@@ -1,8 +1,12 @@
 package com.atguigu.eduservice.entity;
 
 import java.math.BigDecimal;
+
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import java.util.Date;
+
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
@@ -16,7 +20,7 @@ import lombok.experimental.Accessors;
  * 课程
  * </p>
  *
- * @author testjava
+ * @author 张于宴
  * @since 2022-08-02
  */
 @Data
@@ -68,9 +72,11 @@ public class EduCourse implements Serializable {
     private Integer isDeleted;
 
     @ApiModelProperty(value = "创建时间")
+    @TableField(fill = FieldFill.INSERT)//自动填充时间
     private Date gmtCreate;
 
     @ApiModelProperty(value = "更新时间")
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date gmtModified;
 
 

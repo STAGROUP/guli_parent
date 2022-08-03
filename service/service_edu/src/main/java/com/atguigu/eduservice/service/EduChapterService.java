@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * 课程 服务类
  * </p>
  *
- * @author testjava
+ * @author 张于宴
  * @since 2022-08-02
  */
 public interface EduChapterService extends IService<EduChapter> {

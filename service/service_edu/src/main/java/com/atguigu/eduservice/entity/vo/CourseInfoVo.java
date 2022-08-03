@@ -10,6 +10,9 @@ public class CourseInfoVo {
 
     private static final long serialVersionUID = 1L;
 
+    @ApiModelProperty(value = "课程专业父级ID")
+    private String subjectParentId;
+
     @ApiModelProperty(value = "课程ID")
     private String id;
 

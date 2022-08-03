@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
  * 课程视频 服务实现类
  * </p>
  *
- * @author testjava
+ * @author 张于宴
  * @since 2022-08-02
  */
 @Service

@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
  * 课程 服务实现类
  * </p>
  *
- * @author testjava
+ * @author 张于宴
  * @since 2022-08-02
  * 将vo类表向课程表和简介表中添加数据
  */
@@ -42,9 +42,16 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         if (insert == 0){//添加失=>败抛出异常
             throw new GuliExpception(20001,"添加课程信息失败");
         }
+        //问题：课程和描述类id应该一致才对 现在不一致为我们应该首先获取id值赋给描述类id
+
+        //获取添加过程后的id
+        String cid = eduCourse.getId();
+
         //2.向课程简介表添加课程简介
         EduCourseDescription courseDescription = new EduCourseDescription();//new 实体类
         courseDescription.setDescription(courseInfoVo.getDescription());//将vo类get出简介并赋值给courseDescription表
+        //保证课程id跟课程描述id一致 并将描述实体类id策略改成input 手动设置
+        courseDescription.setId(cid);
         courseDescriptionService.save(courseDescription );//调用save方法向数据库中添加数据
     }
 }

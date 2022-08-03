@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
  * 课程 前端控制器
  * </p>
  *
- * @author testjava
+ * @author 张于宴
  * @since 2022-08-02
  */
 @RestController

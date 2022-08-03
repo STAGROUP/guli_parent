@@ -16,7 +16,7 @@ import java.util.List;
  * 课程科目 前端控制器
  * </p>
  *
- * @author testjava
+ * @author 张于宴
  * @since 2022-07-27
  */
 @RestController
