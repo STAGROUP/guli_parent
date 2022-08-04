@@ -30,17 +30,17 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
 
     //添加课程信息
     @Override
-    public void saveCourseInfo(CourseInfoVo courseInfoVo) {
+    public String saveCourseInfo(CourseInfoVo courseInfoVo) {
         //1.向课程表添加课程基本信息
         //CourseInfoVo=>eduCourse转换对象
         EduCourse eduCourse = new EduCourse();
         //                         get出来       set进去
-        BeanUtils.copyProperties(courseInfoVo,eduCourse);
+        BeanUtils.copyProperties(courseInfoVo, eduCourse);
         //调用inster
         int insert = baseMapper.insert(eduCourse);
         //返回值=>影响行数 大于0 表示成功  等于0表示失败
-        if (insert == 0){//添加失=>败抛出异常
-            throw new GuliExpception(20001,"添加课程信息失败");
+        if (insert == 0) {//添加失=>败抛出异常
+            throw new GuliExpception(20001, "添加课程信息失败");
         }
         //问题：课程和描述类id应该一致才对 现在不一致为我们应该首先获取id值赋给描述类id
 
@@ -52,6 +52,7 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         courseDescription.setDescription(courseInfoVo.getDescription());//将vo类get出简介并赋值给courseDescription表
         //保证课程id跟课程描述id一致 并将描述实体类id策略改成input 手动设置
         courseDescription.setId(cid);
-        courseDescriptionService.save(courseDescription );//调用save方法向数据库中添加数据
+        courseDescriptionService.save(courseDescription);//调用save方法向数据库中添加数据
+        return cid;//返回课程id
     }
 }
