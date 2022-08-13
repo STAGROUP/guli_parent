@@ -5,11 +5,7 @@ import com.atguigu.commonutils.R;
 import com.atguigu.eduservice.entity.chapter.ChapterVo;
 import com.atguigu.eduservice.service.EduChapterService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,6 +19,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/eduservice/chapter")
+@CrossOrigin//跨域
 public class EduChapterController {
 
     @Autowired
@@ -32,7 +29,7 @@ public class EduChapterController {
     @GetMapping("getChapterVideo/{courseId}")
     public R getChapterVideo(@PathVariable String courseId){
          List<ChapterVo> list = chapterService.getChapterVideoByCourseId(courseId);
-        return R.ok();
+        return R.ok().data("allChapterVideo",list);
     }
 }
 

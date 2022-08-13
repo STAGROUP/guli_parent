@@ -61,7 +61,7 @@ public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChap
             //4.遍历查询小节list集合 进行封装
             for (int m = 1; m < eduVideoList.size(); m++) {
                 //获得每个小节
-                EduVideo eduVideo = eduVideoList.get(i);
+                EduVideo eduVideo = eduVideoList.get(m);
                 //判断 小节里面的章节id是否跟章节的id语一样
                 if (eduVideo.getChapterId().equals(eduChapter.getId())){
                     //进行封装
@@ -74,6 +74,6 @@ public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChap
             //把封装之后的小节list集合 放到章节对象里面
             chapterVo.setChildren(videoList);
         }
-        return null;
+        return finalList;
     }
 }
