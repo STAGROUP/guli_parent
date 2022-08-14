@@ -27,7 +27,20 @@ public class EduCourseController {
     public R addCourseInfo(@RequestBody CourseInfoVo courseInfoVo){
         //返回添加之后课程id 为了后面添加大纲使用
         String id = courseService.saveCourseInfo(courseInfoVo);//调用service层写具体过程
+
         return R.ok().data("courseId",id);
+    }
+    //根据课程查询课程和基本信息
+    @GetMapping("getCourseInfo/{courseId}")
+    public R getCourseInfo(@PathVariable String courseId){
+        CourseInfoVo courseInfoVo = courseService.getCourseInfo(courseId);
+        return R.ok().data("courseInfoVo",courseInfoVo);
+    }
+    //修改课程信息
+    @PostMapping("updateCourseInfo")
+    public R updateCourseInfo(@RequestBody CourseInfoVo courseInfoVo){
+        courseService.updateCourseInfoVo(courseInfoVo);
+        return R.ok();
     }
 
 }
