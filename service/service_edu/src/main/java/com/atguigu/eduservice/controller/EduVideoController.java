@@ -36,7 +36,6 @@ public class EduVideoController {
         eduVideoService.removeById(id);
         return R.ok();
     }
-
     ;
     //修改小节
     //根据id查询小节做回显
@@ -49,7 +48,6 @@ public class EduVideoController {
     @PostMapping("updateVideo")
     public R updateVideo(@RequestBody EduVideo eduVideo){
         eduVideoService.updateById(eduVideo);
-
        return R.ok();
     }
 }
