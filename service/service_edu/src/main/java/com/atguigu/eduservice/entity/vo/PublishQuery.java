@@ -4,5 +4,4 @@ import lombok.Data;
 public class PublishQuery  {
     private static final long serialVersionUID = 1L;
     private String status;
-    private String title;
-}
+    private String title;}
