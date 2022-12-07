@@ -36,13 +36,15 @@ public class EduCourseController {
     //4.带条件查询的分页
     @ApiOperation(value = "带条件的分页查询")
     @PostMapping("pagePublishCondition/{current}/{limit}")
-    public R pageTeacherCondition(@PathVariable long current, @PathVariable long limit,
+    public R pageTeacherCondition(@PathVariable long current,
+                                  @PathVariable long limit,
                                   @RequestBody(required = false) PublishQuery publishQuery) {
         //创建一个page对象
         Page<EduCourse> pagePublish = new Page<>(current, limit);
         QueryWrapper<EduCourse> wrapper = new QueryWrapper<>();
-        String title = publishQuery.getTitle( );
-        String status = publishQuery.getStatus( );
+        String title = publishQuery.getTitle();
+        String status = publishQuery.getStatus();
+        System.out.println(status);
         if (!StringUtils.isEmpty(title)) {
             wrapper.like("title", title);
         }
@@ -102,6 +104,13 @@ public class EduCourseController {
         eduCourse.setId(id);
         eduCourse.setStatus("Normal"); // 设置课程发布状态
         courseService.updateById(eduCourse);
+        return R.ok();
+    }
+
+    //删除课程
+    @DeleteMapping("{courseId}")
+    public R deleteCourse(@PathVariable String courseId) {
+        courseService.removeCourse(courseId);
         return R.ok();
     }
 }

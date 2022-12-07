@@ -34,6 +34,5 @@ public class ConstanPropertiesUtils implements InitializingBean {
         ACCESS_KEY_ID = keyId;
         ACCESS_KEY_SECRET = keySecret;
         BUCKET_NAME = bucketName;
-
     }
-}
+}    

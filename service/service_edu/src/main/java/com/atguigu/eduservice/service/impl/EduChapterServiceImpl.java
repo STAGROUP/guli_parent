@@ -30,24 +30,26 @@ import java.util.List;
 @Service
 public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChapter> implements EduChapterService {
     @Autowired
-    private EduVideoService eduVideoService;
+    private EduVideoService eduVideoService;//注入
 
     //课程大纲列表 根据id进行查询
     @Override
     public List<ChapterVo> getChapterVideoByCourseId(String courseId) {
+
        //1.根据课程id查询课程里面的所有章节
         QueryWrapper<EduChapter> wrapperChapter = new QueryWrapper<>();
         wrapperChapter.eq("course_id",courseId);
-        List<EduChapter> eduChapters = baseMapper.selectList(wrapperChapter);
+        List<EduChapter> eduChapters = baseMapper.selectList(wrapperChapter);//所有章节的集合
 
         // 2.根据课程id查询课程里面的所有小节
         QueryWrapper<EduVideo> wrapperVideo = new QueryWrapper<>();
         wrapperVideo.eq("course_id",courseId);
-        List<EduVideo> eduVideoList = eduVideoService.list(wrapperVideo);
+        List<EduVideo> eduVideoList = eduVideoService.list(wrapperVideo);//所有的小节集合
 
         //创建list集合 用于封装
         List<ChapterVo> finalList = new ArrayList<>();
-        //3.遍历查询章节list集合进行封装
+
+         //3.遍历查询章节list集合进行封装
         //查询章节list集合
         for (int i = 0; i < eduChapters.size(); i++) {
             //每个章节
@@ -57,13 +59,14 @@ public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChap
             BeanUtils.copyProperties(eduChapter,chapterVo);
             //把chapterVo放到最终list集合
             finalList.add(chapterVo);
+
             //创建集合 用于封装章节的小节
             List<VideoVo> videoList  = new ArrayList<>();
             //4.遍历查询小节list集合 进行封装
             for (int m = 1; m < eduVideoList.size(); m++) {
                 //获得每个小节
                 EduVideo eduVideo = eduVideoList.get(m);
-                //判断 小节里面的章节id是否跟章节的id语一样
+                //判断 小节里面的5674686の33做章节id是否跟章节的id语一样
                 if (eduVideo.getChapterId().equals(eduChapter.getId())){
                     //进行封装
                     VideoVo videoVo = new VideoVo();
@@ -91,6 +94,14 @@ public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChap
             //成公 1>0 true  失败 0>0 false
             return result>0;
         }
+
+    }
+    //根据课程id删除章节
+    @Override
+    public void removeChapterByCourseId(String courseId) {
+        QueryWrapper<EduChapter> wrapper = new QueryWrapper<>();
+        wrapper.eq("course_id",courseId);
+        baseMapper.delete(wrapper);
 
     }
 }
