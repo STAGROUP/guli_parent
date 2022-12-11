@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
-@Component
-@FeignClient("service-vod")
+@Component                      //fallback容错之后实现哪个方法
+@FeignClient(name = "service-vod",fallback = VodFileDegradeFeignClient.class)
 
 public interface vodClient {
     //定义调用方法的名称
