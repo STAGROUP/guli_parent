@@ -7,10 +7,9 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 
-@Component
-@ComponentScan({"com.atguigu"}) //指定扫描位置
-@MapperScan("com.atguigu.educms.mapper")
 @SpringBootApplication
+@ComponentScan(basePackages ={"com.atguigu"}) //指定扫描位置
+@MapperScan("com.atguigu.educms.mapper")
 @EnableDiscoveryClient //nacos注册
 public class CmsApplication {
     public static void main(String[] args) {

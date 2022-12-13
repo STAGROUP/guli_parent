@@ -18,6 +18,8 @@
         <module>service_vod</module>
         <module>service_oss</module>
         <module>service-vod</module>
+        <module>service_cms</module>
+        <module>service_acl</module>
     </modules>
 
     <dependencies>
@@ -33,7 +35,7 @@
             <artifactId>common_utils</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-
+        <!--负载均衡-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
