@@ -5,8 +5,12 @@ import com.atguigu.commonutils.R;
 import com.atguigu.educms.entity.CrmBanner;
 import com.atguigu.educms.service.CrmBannerService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * <p>
@@ -22,13 +26,15 @@ import org.springframework.web.bind.annotation.*;
 public class BannerAdminController {
     @Autowired
     private CrmBannerService crmBannerService;
+
     //1.分页查询banner
-    @GetMapping("pageBanner/{page}/{limit}")
+    @PostMapping("pageBanner/{page}/{limit}")
     public R pageBanner(@PathVariable long page,@PathVariable long limit){
         //baomidou page
         Page<CrmBanner> pageBanners = new Page<>(page,limit);
         crmBannerService.page(pageBanners,null);
-        return R.ok().data("items",pageBanners.getRecords()).data("total",pageBanners.getTotal());
+        System.out.println(pageBanners.getTotal());
+        return R.ok().data("items",pageBanners.getRecords()).data("total", pageBanners.getTotal());
     }
     //2.添加banner
     @PostMapping("addBanner")
