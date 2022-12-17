@@ -22,7 +22,7 @@ public class UcenterMemberController {
     @Autowired
     private UcenterMemberService memberService;
     //登录
-    @GetMapping("/longin")
+    @PostMapping("/longin")
     public R loginUser(@RequestBody UcenterMember member){
         String token = memberService.login(member);
         return R.ok().data("token",token);
