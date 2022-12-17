@@ -3,12 +3,15 @@ package com.atguigu.educenter.service.impl;
 import com.atguigu.commonutils.JwtUtils;
 import com.atguigu.commonutils.MD5;
 import com.atguigu.educenter.entity.UcenterMember;
+import com.atguigu.educenter.entity.vo.RegisterVo;
 import com.atguigu.educenter.mapper.UcenterMemberMapper;
 import com.atguigu.educenter.service.UcenterMemberService;
 import com.atguigu.servicebase.exceptionhandler.GuliExpception;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 /**
@@ -22,6 +25,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, UcenterMember> implements UcenterMemberService {
 
+    @Autowired
+    private  RedisTemplate<String,String> redisTemplate;
     @Override //登陆方法
     public String login(UcenterMember member) {
         //获取登陆的手机号和密码
@@ -55,5 +60,39 @@ public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, U
         String jwtToken = JwtUtils.getJwtToken(mobileMember.getId(), mobileMember.getNickname());
 
         return jwtToken;
+    }
+
+
+    //注册
+    @Override
+    public void register(RegisterVo registerVo) {
+        String code = registerVo.getCode();//验证码
+        String mobile = registerVo.getMobile();
+        String nickname = registerVo.getNickname();
+        String password = registerVo.getPassword();
+        //非空判断
+        if (StringUtils.isEmpty(mobile)||StringUtils.isEmpty(password)||
+            StringUtils.isEmpty(code)||StringUtils.isEmpty(nickname))
+        {
+            throw  new GuliExpception(20001,"注册失败");
+        }
+        //验证码判断
+        String redisCode = redisTemplate.opsForValue().get(mobile);
+        if (!code.equals(redisCode)){
+            throw new GuliExpception(20001,"验证码失效！");
+        }
+        //判断手机号是否重复
+        QueryWrapper<UcenterMember> wrapper = new QueryWrapper<>();
+        wrapper.eq("mobile",mobile);
+        Integer count = baseMapper.selectCount(wrapper);
+        if (count>0){
+            throw new GuliExpception(20001,"手机号已被注册过了");
+        }
+        UcenterMember ucenterMember = new UcenterMember();
+        ucenterMember.setMobile(mobile);
+        ucenterMember.setPassword(MD5.encrypt(password));
+        ucenterMember.setIsDisabled(false);
+        ucenterMember.setAvatar("https://ssg-gulixueyuan.oss-cn-beijing.aliyuncs.com/2022/08/02/2b55ddb3fd1d4edd850aa9320ae202a6file.png");
+        baseMapper.insert(ucenterMember);
     }
 }
