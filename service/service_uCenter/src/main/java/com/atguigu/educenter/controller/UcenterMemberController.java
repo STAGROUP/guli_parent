@@ -26,7 +26,7 @@ public class UcenterMemberController {
     @Autowired
     private UcenterMemberService memberService;
     //登录
-    @PostMapping("/longin")
+    @PostMapping("longin")
     public R loginUser(@RequestBody UcenterMember member){
         String token = memberService.login(member);
         return R.ok().data("token",token);
@@ -34,7 +34,7 @@ public class UcenterMemberController {
 
 
     //注册
-    @PostMapping("/register")
+    @PostMapping("register")
     public R registerUser(@RequestBody RegisterVo registerVo){
         memberService.register(registerVo);
         return R.ok();
@@ -42,7 +42,7 @@ public class UcenterMemberController {
     }
 
     //根据token获取用户信息
-    @PostMapping("/getMembereInfo")
+    @PostMapping("getMembereInfo")
     public R getMemberInfo(HttpServletRequest request){
         //调用jwt工具的方法 根据request对象获取头信息 返回用户id
         String memberId = JwtUtils.getMemberIdByJwtToken(request);

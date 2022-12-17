@@ -13,6 +13,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 /**
  * <p>
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Service;
  * @since 2022-12-17
  */
 @Service
+@CrossOrigin
 public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, UcenterMember> implements UcenterMemberService {
 
     @Autowired
