@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 /**
  * @author 张于宴
@@ -15,6 +16,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @MapperScan("com/atguigu/eduservice/mapper")
+
 public class CmsConfig {
 
     /**

@@ -1,8 +1,10 @@
 package com.atguigu.commonutils;
 
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.bind.annotation.CrossOrigin;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-
 
 public final class MD5 {
 
