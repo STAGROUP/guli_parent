@@ -14,6 +14,30 @@ import java.net.URLEncoder;
 @Controller//注意这里没有配置 @RestController
 @RequestMapping("/api/ucenter/wx")
 public class WxApiController {
+    //2.获取扫描人信息
+    @GetMapping("callback")
+    public String callback(String code,String state){
+        //1.先获取code值 临时票据 类似于验证码
+
+        //2.拿着code值 请求微信固定地址得到两个值 access_token 和openID
+        String baseAccessTokenUrl = "https://api.weixin.qq.com/sns/oauth2/access_token" +
+                "?appid=%s" +
+                "&secret=%s" +
+                "&code=%s" +
+                "&grant_type=authorization_code";
+
+        String accessTokenUrl = String.format(
+                baseAccessTokenUrl,
+                ConstantWxUtils.WX_OPEN_APP_ID,
+                ConstantWxUtils.WX_OPEN_APP_SECRET,
+                code);
+        //请求这个拼接好得多地址 得到两个返回的值 access_Token 和 openID
+        //httpclient发送请求 得到返回结果 不用浏览器请求
+
+
+
+        return "redirect:http://localhost:3000";
+    }
     //1.生成二维码
     @GetMapping("login")
     public String getWxCode(){
