@@ -1,5 +1,6 @@
 package com.atguigu.educenter.controller;
 
+import com.atguigu.commonutils.JwtUtils;
 import com.atguigu.educenter.entity.UcenterMember;
 import com.atguigu.educenter.service.UcenterMemberService;
 import com.atguigu.educenter.utils.ConstantWxUtils;
@@ -22,9 +23,10 @@ import java.util.HashMap;
 public class WxApiController {
     @Autowired
     private UcenterMemberService ucenterMemberService;
+
     //2.获取扫描人信息
     @GetMapping("callback")
-    public String callback(String code,String state){
+    public String callback(String code, String state) {
 
         try {
             //1.先获取code值 临时票据 类似于验证码
@@ -52,35 +54,42 @@ public class WxApiController {
             HashMap MapAccessToken = gson.fromJson(accessToken, HashMap.class);
             String accestoken = (String) MapAccessToken.get("access_token");
             String openid = (String) MapAccessToken.get("openid");
-            //3.拿着access_token openid 去请求微信固定地址 获取扫码人信息
-            String baseUserInfoUrl = "https://api.weixin.qq.com/sns/userinfo" +
-                    "?access_token=%s" +
-                    "&openid=%s";
-            String userInfoUrl = String.format(baseUserInfoUrl, accestoken, openid);
-            String userInfo = HttpClientUtils.get(userInfoUrl);
-            System.out.println(userInfo);
-            //获取扫码人信息
-            HashMap MapUserInfo = gson.fromJson(userInfo, HashMap.class);
-            String nickname = (String) MapUserInfo.get("nickname");
-            String headimgurl = (String) MapUserInfo.get("headimgurl");
+
             //扫码人信息添加到数据库
             //判断数据库里面是否存在相同微信的信息 根据openid
             UcenterMember member = ucenterMemberService.getOpenIdMember(openid);
-            if (member==null){ //member为null 进行添加
-                 member = new UcenterMember();
+            if (member == null) { //member为null 进行添加
+                //3.拿着access_token openid 去请求微信固定地址 获取扫码人信息
+                String baseUserInfoUrl = "https://api.weixin.qq.com/sns/userinfo" +
+                        "?access_token=%s" +
+                        "&openid=%s";
+                String userInfoUrl = String.format(baseUserInfoUrl, accestoken, openid);
+                String userInfo = HttpClientUtils.get(userInfoUrl);
+                System.out.println(userInfo);
+                //获取扫码人信息
+                HashMap MapUserInfo = gson.fromJson(userInfo, HashMap.class);
+                String nickname = (String) MapUserInfo.get("nickname");
+                String headimgurl = (String) MapUserInfo.get("headimgurl");
+                //添加到数据库
+                member = new UcenterMember();
                 member.setOpenid(openid);
                 member.setNickname(nickname);
                 member.setAvatar(headimgurl);
                 ucenterMemberService.save(member);
             }
+            //使用jwt根据member对象生成字符串
+            String jwtToken = JwtUtils.getJwtToken(member.getId(), member.getNickname());
+            //通过路径传递token字符串 cookie不能跨域
+            return "redirect:http://localhost:3000?token="+jwtToken;
         } catch (Exception e) {
-            throw  new GuliExpception(20001,"登陆失败");
+            throw new GuliExpception(20001, "登陆失败");
         }
-        return "redirect:http://localhost:3000";
+
     }
+
     //1.生成二维码
     @GetMapping("login")
-    public String getWxCode(){
+    public String getWxCode() {
         //固定地址 后面拼接参数
         // 微信开放平台授权baseUrl
         String baseUrl = "https://open.weixin.qq.com/connect/qrconnect" +
@@ -94,10 +103,10 @@ public class WxApiController {
         String redirectUrl = ConstantWxUtils.WX_OPEN_REDIRECT_URL;
         try {
             redirectUrl = URLEncoder.encode(redirectUrl, "utf-8");
-        }catch (UnsupportedEncodingException e) {
+        } catch (UnsupportedEncodingException e) {
             throw new GuliExpception(20001, e.getMessage());
         }
-       String url = String.format(
+        String url = String.format(
                 baseUrl,
                 ConstantWxUtils.WX_OPEN_APP_ID,
                 redirectUrl,
