@@ -2,7 +2,6 @@ package com.atguigu.eduservice.service.impl;
 
 import com.atguigu.eduservice.entity.EduCourse;
 import com.atguigu.eduservice.entity.EduCourseDescription;
-import com.atguigu.eduservice.entity.EduVideo;
 import com.atguigu.eduservice.entity.front.CourseFrontVo;
 import com.atguigu.eduservice.entity.vo.CourseInfoVo;
 import com.atguigu.eduservice.entity.vo.CoursePublishVo;
@@ -142,13 +141,13 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
     public Map<String, Object> getCourseFrontList(Page<EduCourse> pageCourse, CourseFrontVo courseFrontVo) {
         QueryWrapper<EduCourse> wrapper = new QueryWrapper();
         //判断条件值是否为空
-        if (StringUtils.isEmpty(courseFrontVo.getSubjectParentId())){//一级分类
+        if (!StringUtils.isEmpty(courseFrontVo.getSubjectParentId())){//一级分类
             wrapper.eq("subject_Parent_id",courseFrontVo.getSubjectParentId());
         }
-        if (StringUtils.isEmpty(courseFrontVo.getSubjectId())){//二级分类
-            wrapper.eq("subject_Parent_id",courseFrontVo.getSubjectId());
+        if (!StringUtils.isEmpty(courseFrontVo.getSubjectId())){//二级分类
+            wrapper.eq("subject_id",courseFrontVo.getSubjectId());
         }
-        if (StringUtils.isEmpty(courseFrontVo.getBuyCountSort())){//关注度
+        if (!StringUtils.isEmpty(courseFrontVo.getBuyCountSort())){//关注度
             wrapper.orderByDesc("buy_count");
         }
         if (!StringUtils.isEmpty(courseFrontVo.getGmtCreateSort())) {//最新
@@ -177,7 +176,7 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         map.put("hasPrevious", hasPrevious);
 
 
-        return null;
+        return map;
     }
 
 }
