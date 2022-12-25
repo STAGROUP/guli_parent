@@ -7,4 +7,5 @@ public class VideoVo {
     //小节id
     private String id;
     private String title;
+    private String videoSourceId;
 }

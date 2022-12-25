@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>service-vod</artifactId>
+    <artifactId>service_vod</artifactId>
     <dependencies>
         <dependency>
             <groupId>com.aliyun</groupId>

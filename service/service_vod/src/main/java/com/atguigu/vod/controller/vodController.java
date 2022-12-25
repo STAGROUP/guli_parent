@@ -1,7 +1,11 @@
 package com.atguigu.vod.controller;
 
+
+
 import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.vod.model.v20170321.DeleteVideoRequest;
+import com.aliyuncs.vod.model.v20170321.GetVideoPlayAuthRequest;
+import com.aliyuncs.vod.model.v20170321.GetVideoPlayAuthResponse;
 import com.atguigu.commonutils.R;
 import com.atguigu.servicebase.exceptionhandler.GuliExpception;
 import com.atguigu.vod.service.VodService;
@@ -19,6 +23,30 @@ import java.util.List;
 public class vodController {
     @Autowired
     private VodService vodService;
+    @GetMapping("getPlayAuth/{id}")
+    public R getVideoPlayAuth(@PathVariable String id) throws Exception {
+
+        //获取阿里云存储相关常量
+        String accessKeyId = ConstantVodUtils.ACCESS_KEY_ID;
+        String accessKeySecret = ConstantVodUtils.ACCESS_KEY_SECRET;
+
+        //初始化
+        DefaultAcsClient client = initVodCilent.initVodClient(accessKeyId, accessKeySecret);
+
+        //请求
+        GetVideoPlayAuthRequest request = new GetVideoPlayAuthRequest();
+        request.setVideoId(id);
+
+        //响应
+        GetVideoPlayAuthResponse response = client.getAcsResponse(request);
+
+        //得到播放凭证
+        String playAuth = response.getPlayAuth();
+
+        //返回结果
+        return R.ok().message("获取凭证成功").data("playAuth", playAuth);
+    }
+
 
     //上传视频到阿里云
     @PostMapping("uploadAlyVideo")
