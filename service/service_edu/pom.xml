@@ -18,6 +18,12 @@
             <artifactId>easyexcel</artifactId>
             <version>2.1.1</version>
         </dependency>
+        <dependency>
+            <groupId>com.atguigu</groupId>
+            <artifactId>service_ucenter</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
 
     </dependencies>
     <!-- 项目打包时会将java目录中的*.xml文件也进行打包 -->

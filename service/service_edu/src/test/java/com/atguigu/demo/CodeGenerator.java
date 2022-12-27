@@ -25,7 +25,7 @@ public class CodeGenerator {
         GlobalConfig gc = new GlobalConfig();
         String projectPath = System.getProperty("user.dir");
         gc.setOutputDir("C:\\idea\\guli_parent\\service\\service_edu" + "/src/main/java");
-        gc.setAuthor("testjava");
+        gc.setAuthor("张于宴");
         gc.setOpen(false); //生成后是否打开资源管理器
         gc.setFileOverride(false); //重新生成时文件是否覆盖
         //UserServie
@@ -55,7 +55,7 @@ public class CodeGenerator {
         mpg.setPackageInfo(pc);
         // 5、策略配置
         StrategyConfig strategy = new StrategyConfig();
-        strategy.setInclude("edu_course","edu_course_description","edu_chapter","edu_video");///////////改////////////////////
+        strategy.setInclude("edu_comment");///////////改////////////////////
         strategy.setNaming(NamingStrategy.underline_to_camel);//数据库表映射到实体的命名策略
         strategy.setTablePrefix(pc.getModuleName() + "_"); //生成实体时去掉表前缀
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);//数据库表字段映射到实体的命名策略
