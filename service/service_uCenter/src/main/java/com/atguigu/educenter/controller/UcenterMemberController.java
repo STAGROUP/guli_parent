@@ -8,6 +8,7 @@ import com.atguigu.educenter.entity.vo.RegisterVo;
 import com.atguigu.educenter.service.UcenterMemberService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.web.bind.annotation.*;
 import com.atguigu.commonutils.R;
 
@@ -24,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 @RequestMapping("/educenter/member")
 @CrossOrigin
+@EnableFeignClients
 public class UcenterMemberController {
     @Autowired
     private UcenterMemberService memberService;

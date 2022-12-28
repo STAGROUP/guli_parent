@@ -12,6 +12,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,6 +21,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/eduservice/coursefront")
 @CrossOrigin
+@EnableFeignClients
 public class CourseFrontController {
     @Autowired
     private EduCourseService courseService;

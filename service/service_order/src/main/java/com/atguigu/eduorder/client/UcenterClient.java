@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Component
-@FeignClient("service-ucenter")
+@FeignClient(name = "service-ucenter",fallback = UcenterClientImpl.class)
 public interface UcenterClient {
     @PostMapping("/educenter/member/getMemberInfoOrder/{id}")
     public UcenterMemberOrder getMemberInfoOrder(@PathVariable("id") String id);
