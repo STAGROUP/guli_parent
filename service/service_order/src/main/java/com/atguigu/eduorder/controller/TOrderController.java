@@ -5,7 +5,9 @@ import com.atguigu.commonutils.JwtUtils;
 import com.atguigu.commonutils.R;
 import com.atguigu.eduorder.client.EduClient;
 import com.atguigu.eduorder.client.UcenterClient;
+import com.atguigu.eduorder.entity.TOrder;
 import com.atguigu.eduorder.service.TOrderService;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,6 +36,14 @@ public class TOrderController {
         //创建订单 返回订单号
         String orderNo = orderService.createOrders(courseId,UserId);
         return R.ok().data("orderId",orderNo);
+    }
+    //查询订单接口
+    @GetMapping("getOrderInfo/{orderId}")
+    public R getOrderInfo(@PathVariable String orderId){
+        QueryWrapper<TOrder> wrapper = new QueryWrapper<>();
+        wrapper.eq("order_no",orderId);
+        TOrder order = orderService.getOne(wrapper);
+        return R.ok().data("items",order);
     }
 }
 
