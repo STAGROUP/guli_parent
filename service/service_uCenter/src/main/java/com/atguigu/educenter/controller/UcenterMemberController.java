@@ -2,6 +2,7 @@ package com.atguigu.educenter.controller;
 
 
 import com.atguigu.commonutils.JwtUtils;
+import com.atguigu.commonutils.orderVo.UcenterMemberOrder;
 import com.atguigu.educenter.entity.UcenterMember;
 import com.atguigu.educenter.entity.vo.RegisterVo;
 import com.atguigu.educenter.service.UcenterMemberService;
@@ -53,13 +54,22 @@ public class UcenterMemberController {
         return R.ok().data("userInfo", member);
     }
 
-    //根据用户id查询用户信息
+    //根据用户id查询用户信息评论接口
     @PostMapping("/getMemberInfoById/{memberId}")
     public UcenterMember getMemberInfoById(@PathVariable String memberId){
         UcenterMember member = memberService.getById(memberId);
         UcenterMember memberVo = new UcenterMember();
         BeanUtils.copyProperties(member,memberVo);
         return memberVo;
+    }
+    //根据用户id查询用户信息Order接口 可以用一个
+    @PostMapping("/getMemberInfoOrder/{id}")
+    public UcenterMemberOrder getMemberInfoOrder(@PathVariable String id){
+        UcenterMember member = memberService.getById(id);
+        //把memberVo赋值给UcenterMemberOrder
+        UcenterMemberOrder memberOrder = new UcenterMemberOrder();
+        BeanUtils.copyProperties(member,memberOrder);
+        return memberOrder;
     }
 
 

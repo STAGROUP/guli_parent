@@ -17,4 +17,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class TOrderServiceImpl extends ServiceImpl<TOrderMapper, TOrder> implements TOrderService {
 
+    //1.生成订单方法
+    @Override
+    public String createOrders(String courseId, String userId) {
+        //通过远程调用根据用户id获取用户信息
+
+
+        //通过远程调用根据课程id获取课程信息
+        return null;
+    }
 }

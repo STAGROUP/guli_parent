@@ -1,10 +1,13 @@
 package com.atguigu.eduorder.controller;
 
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
+import com.atguigu.commonutils.JwtUtils;
+import com.atguigu.commonutils.R;
+import com.atguigu.eduorder.service.TOrderService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RestController;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * <p>
@@ -18,6 +21,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/eduorder/order")
 @CrossOrigin
 public class TOrderController {
+    @Autowired
+    private TOrderService orderService;
 
+    //1.生成订单方法
+    @PostMapping("createOrder/{courseId}")
+    public R createOrder(@PathVariable String courseId, HttpServletRequest request){
+        //header中获取token返回用户id
+        String UserId = JwtUtils.getMemberIdByJwtToken(request);
+        //创建订单 返回订单号
+        String orderNo = orderService.createOrders(courseId,UserId);
+        return R.ok().data("orderId",orderNo);
+    }
 }
 

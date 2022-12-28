@@ -1,5 +1,6 @@
 package com.atguigu.eduorder;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
@@ -7,8 +8,9 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
-@SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
+@SpringBootApplication()
     @ComponentScan(basePackages = {"com.atguigu"})
+    @MapperScan("com.atguigu.eduorder.mapper")
     @EnableDiscoveryClient//nacos注册
     @CrossOrigin
     public class OrderApplication {
