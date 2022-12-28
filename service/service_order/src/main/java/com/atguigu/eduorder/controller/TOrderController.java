@@ -3,6 +3,8 @@ package com.atguigu.eduorder.controller;
 
 import com.atguigu.commonutils.JwtUtils;
 import com.atguigu.commonutils.R;
+import com.atguigu.eduorder.client.EduClient;
+import com.atguigu.eduorder.client.UcenterClient;
 import com.atguigu.eduorder.service.TOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
