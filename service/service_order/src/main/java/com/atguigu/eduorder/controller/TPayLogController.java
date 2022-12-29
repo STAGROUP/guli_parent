@@ -30,5 +30,20 @@ public class TPayLogController {
         Map map = payLogService.createNatvie(orderNo);
         return R.ok().data(map);
     }
+    //2.查询订单状态
+    @GetMapping("queryPayStatus/{orderNo}")
+    public R queryPayStatus(@PathVariable String orderNo){
+        Map<String,String> map = payLogService.queryPayStatus(orderNo);
+        if (map==null){
+            return R.error().message("支付出错了");
+        }
+        //如果返回不为空 通过map获取订单状态
+        if (map.get("trade_state").equals("SUCCESS")){//支付成功
+            //向支付表添加记录 并更新订单状态
+            payLogService.updateOrderStatus(map);
+            return R.ok().message("支付成功");
+        }
+        return R.ok().message("支付中");
+    }
 }
 
