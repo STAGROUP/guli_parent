@@ -4,7 +4,7 @@ import com.atguigu.commonutils.orderVo.CourseWebVoOrder;
 import com.atguigu.commonutils.orderVo.UcenterMemberOrder;
 import com.atguigu.eduorder.client.EduClient;
 import com.atguigu.eduorder.client.UcenterClient;
-import com.atguigu.eduorder.controller.utils.OrderNoUtil;
+import com.atguigu.eduorder.utils.OrderNoUtil;
 import com.atguigu.eduorder.entity.TOrder;
 import com.atguigu.eduorder.mapper.TOrderMapper;
 import com.atguigu.eduorder.service.TOrderService;

@@ -1,10 +1,8 @@
-package com.atguigu.eduorder.controller.utils;
+package com.atguigu.eduorder.utils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * 订单号工具类
