@@ -28,20 +28,36 @@ public class TOrderController {
 
     //1.生成订单方法
     @PostMapping("createOrder/{courseId}")
-    public R createOrder(@PathVariable String courseId, HttpServletRequest request){
+    public R createOrder(@PathVariable String courseId, HttpServletRequest request) {
         //header中获取token返回用户id
         String UserId = JwtUtils.getMemberIdByJwtToken(request);
         //创建订单 返回订单号
-        String orderNo = orderService.createOrders(courseId,UserId);
-        return R.ok().data("orderId",orderNo);
+        String orderNo = orderService.createOrders(courseId, UserId);
+        return R.ok().data("orderId", orderNo);
     }
+
     //查询订单接口
     @GetMapping("getOrderInfo/{orderId}")
-    public R getOrderInfo(@PathVariable String orderId){
+    public R getOrderInfo(@PathVariable String orderId) {
         QueryWrapper<TOrder> wrapper = new QueryWrapper<>();
-        wrapper.eq("order_no",orderId);
+        wrapper.eq("order_no", orderId);
         TOrder order = orderService.getOne(wrapper);
-        return R.ok().data("items",order);
+        return R.ok().data("items", order);
+    }
+
+    //根据课程id和用户id查询签订单信息
+    @GetMapping("isBuyCourse/{courseId}/{memberId}")
+    public boolean isBuyCourse(@PathVariable String courseId, @PathVariable String memberId) {
+        QueryWrapper<TOrder> wrapper = new QueryWrapper<>();
+        wrapper.eq("course_id", courseId);
+        wrapper.eq("member_id", memberId);
+        wrapper.eq("status", 1);
+        int count = orderService.count(wrapper);
+        if (count > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
 

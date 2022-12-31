@@ -123,10 +123,11 @@ public class TPayLogServiceImpl extends ServiceImpl<TPayLogMapper, TPayLog> impl
         TPayLog payLog=new TPayLog();
         payLog.setOrderNo(order.getOrderNo());//支付订单号
         payLog.setPayTime(new Date());
-        payLog.setPayType(1);//支付类型
+        payLog.setPayType(1);//支付类型 1 代表微信
         payLog.setTotalFee(order.getTotalFee());//总金额(分)
         payLog.setTradeState(map.get("trade_state"));//支付状态
-        payLog.setTransactionId(map.get("transaction_id"));
+        payLog.setTransactionId(map.get("transaction_id"));//订单流水号
+        //fastJson
         payLog.setAttr(JSONObject.toJSONString(map));
         baseMapper.insert(payLog);//插入到支付日志表
     }

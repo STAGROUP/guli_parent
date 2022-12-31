@@ -28,12 +28,14 @@ public class TPayLogController {
     public R createNative(@PathVariable String orderNo){
         //返回信息 包含二维码地址 其他信息
         Map map = payLogService.createNatvie(orderNo);
+        System.out.println("////////二维码///////："+map);
         return R.ok().data(map);
     }
     //2.查询订单状态
     @GetMapping("queryPayStatus/{orderNo}")
     public R queryPayStatus(@PathVariable String orderNo){
         Map<String,String> map = payLogService.queryPayStatus(orderNo);
+        System.out.println("//////订单状态map//////："+map);
         if (map==null){
             return R.error().message("支付出错了");
         }
@@ -43,7 +45,7 @@ public class TPayLogController {
             payLogService.updateOrderStatus(map);
             return R.ok().message("支付成功");
         }
-        return R.ok().message("支付中");
+        return R.ok().code(25000).message("支付中");
     }
 }
 
