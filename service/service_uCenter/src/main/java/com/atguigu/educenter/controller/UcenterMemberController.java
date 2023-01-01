@@ -58,22 +58,29 @@ public class UcenterMemberController {
 
     //根据用户id查询用户信息评论接口
     @PostMapping("/getMemberInfoById/{memberId}")
-    public UcenterMember getMemberInfoById(@PathVariable String memberId){
+    public UcenterMember getMemberInfoById(@PathVariable String memberId) {
         UcenterMember member = memberService.getById(memberId);
         UcenterMember memberVo = new UcenterMember();
-        BeanUtils.copyProperties(member,memberVo);
+        BeanUtils.copyProperties(member, memberVo);
         return memberVo;
     }
+
     //根据用户id查询用户信息Order接口 可以用一个
     @PostMapping("/getMemberInfoOrder/{id}")
-    public UcenterMemberOrder getMemberInfoOrder(@PathVariable String id){
+    public UcenterMemberOrder getMemberInfoOrder(@PathVariable String id) {
         UcenterMember member = memberService.getById(id);
         //把memberVo赋值给UcenterMemberOrder
         UcenterMemberOrder memberOrder = new UcenterMemberOrder();
-        BeanUtils.copyProperties(member,memberOrder);
+        BeanUtils.copyProperties(member, memberOrder);
         return memberOrder;
     }
 
+    //查询某一天的注册人数
+    @GetMapping("countRegister/{day}")
+    public R countRegister(@PathVariable String day) {
+        Integer count = memberService.countRegister(day);
+        return R.ok().data("countRegister", count);
+    }
 
 }
 
